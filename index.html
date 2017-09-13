@@ -1,0 +1,49 @@
+<!Doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+  </head>	
+  <body>
+  <img id="img" src="images/aaa.jpg">
+  <canvas id="myCanvas" ></canvas>
+  </body>
+  <script type="text/javascript">
+    //图片转化
+    function convertCanvasToImage(canvas) {
+      var image = new Image();
+      image.src = canvas.toDataURL("image/png");
+      return image;
+    }
+    //把图片拷贝到画布
+    function drawImages(image){
+      var mycv = document.getElementById("myCanvas");  
+      mycv.width = image.width;
+      mycv.height = image.height;
+      var myctx = mycv.getContext("2d");
+      myctx.drawImage(image, 0, 0);
+    }
+    //图片加载
+    function load(){
+      var image = new Image();  
+      image.src = "images/aaa.jpg"; 
+      if(image.complete){
+         drawImages(image);
+      }else{
+        image.onload = function(){
+          drawImages(image);
+        };
+        image.onerror = function(){
+          window.alert('加载失败，请重试');
+        };
+      };   
+    }
+
+    if (document.all) {
+      window.attachEvent('onload', load);  
+    }else {  
+      window.addEventListener('load', load, false);
+    }
+    var myCanvas = document.getElementById("myCanvas");
+    convertCanvasToImage(myCanvas)
+  </script>
+</html>
