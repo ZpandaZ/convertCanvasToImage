@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>imageLoad</title>
+  <style type="text/css">
+    .imgDiv{
+      position:relative;
+      width:400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+  	.isGif{
+  		width: 20px;
+  		height: 20px;
+  		position: absolute;
+  		top: calc(50% - 10px);
+  		left: calc(50% - 10px);
+  		z-index: 10; }
+    .icon{
+      color: white;
+      font-size:14px;
+      text-align: center;
+      top:10px;
+      right:10px;
+      position: absolute;
+      width:40px;
+      height: 20px;
+      border: 1px solid red;
+      z-index: 10;}
+  </style>
+</head>
+<body>
+  <div class="imgDiv">
+    <img id="img1" style="width:100%" alt="图片" data-src="images/test.gif">
+    <p id="p1">loading...</p>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+  $("img").each(function(index,vo){
+    var src = $(this).attr("data-src");
+    var type = src.substr(src.lastIndexOf(".")+1);
+    if(type == "gif"){
+      src = src.substr(0,src.lastIndexOf(".")+1) + "png";
+      $(this).before("<div class='icon'>动画</div>");
+    }
+    $(this).attr("src",src);
+  });
+
+	$("img").on('click',function(event){
+	  event.stopPropagation();
+    $(this).prev().remove();
+	  $(this).attr("alt","加载中");
+	  $(this).attr("src","images/test.gif");
+	  $(this).before("<img src='images/loading.gif' class='isGif'>");
+	  $("#img1").each(function(index,vo){
+	    $(this).load(function(){
+        $(this).prev().remove();
+      });
+	  });
+	})
+</script>
+</html>
