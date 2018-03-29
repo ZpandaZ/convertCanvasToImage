@@ -1,0 +1,97 @@
+1.对对象内某个属性排序
+function compare(propertyName){
+	return function(obj1,obj2){
+		var value1 = obj1[propertyName]
+		var value2 = obj2[propertyName]
+		if(value1 < value2)
+			return -1
+		else if(value1 > value2)
+			return 1
+		else
+			return 0
+	}
+}
+var data = [{name:'z',age:'20'},{name:'q',age:'22'}]
+data.sort(compare('age'))
+
+2.递归
+function factorial(num){
+	if(num <= 1)
+		return 1
+	else
+		return num *  arguments.callee(num - 1)
+}
+
+3.字符串全局查找（非正则表达式）
+var a = 'wqetyireotasddsjfdgklzxcbnvbxcwuruyetuirashfhklgdsxzvm'
+var position = new Array()
+var pos = a.indexOf('e')
+
+while(pos > -1){
+	position.push(pos)
+	pos = a.indexOf('e',pos + 1)
+}
+
+5.随机数
+var random = Math.floor(Math.random() * 10 + N)
+
+6.判断属性来自原型还是实例
+function hasPrototypeProperty(object, name){
+	return !object.hasOwnProperty(name) && (name in object)
+}
+
+7.编写一个javscript函数 fn，该函数有一个参数 n（数字类型），其返回值是一个数组，该数组内是 n 个随机且不重复的整数，且整数取值范围是 [2, 32]
+function fn(n){
+	if(!arguments[0])
+		return '输入为空'
+	if(typeof n !== 'number')
+		if(isInteger(n)){
+			return '请输入整数'
+		}else{
+        	return '请输入数字'  
+		}
+	if(n < 2 || n >32)
+		return '数字范围有误'
+    var arr = []
+    for(var i = 0; i < n; i++){
+        var num = Math.floor( Math.random() * 30 + 2)
+        if(arr.includes(num)){
+            --i
+        }else{
+            arr[i] = num
+        }
+    }
+    return arr
+}
+
+8.链式调用add(1)(2)(3)...
+function add(num){
+    var sum=0;
+    sum= sum+num;
+    var tempFun = function(numB){
+        sum= sum+ numB;
+        return tempFun;
+    }
+	tempFun.valueOf = function(){
+		return sum
+	}
+	tempFun.toString=function(){
+        return sum+'';
+    }
+	return tempFun
+}
+
+9.实现一个深拷贝
+function deepClone(obj) {
+    var newObj = obj instanceof Array ? [] : {};
+    //obj属于基本数据类型,直接返回obj
+    if(typeof obj !== 'object') {
+        return obj;
+    } else {
+    //obj属于数组或对象，遍历它们
+        for(var i in obj) {
+            newObj[i] = typeof obj[i] === 'object' ? deepClone(obj[i]):obj[i]; 
+        }
+    }
+    return newObj;
+}
