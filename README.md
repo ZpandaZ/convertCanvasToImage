@@ -3,3 +3,6 @@
 
 （2）imageLoad.html：
   gif 图静态处理，点击加载例子
+  
+（3）classical examples
+  JavaScript 经典例子
