@@ -95,3 +95,47 @@ function deepClone(obj) {
     }
     return newObj;
 }
+
+10.数组去重
+var arr = [1,1,2,3,4,5,4,6,8,9,3,6,1,5];
+var res = arr.reduce((pre,val)=>{
+    if(pre.includes(val)){
+    	return pre
+    }else{
+    	return pre.concat(val)
+    }
+},[])
+
+11.计算出现次数
+var res = ['a','a','b','c','a','c'];
+res.reduce((pre,val)=>{
+    if(val in pre){
+    	pre[val]++	
+    }else{
+    	pre[val] = 1
+    }
+    return pre
+},{})
+
+12. 扁平化数组
+(1)
+var arr = [[1,2,3],1,5,2,[2,5,2,[5]]]
+
+function flatten(arr){
+    return arr.reduce((pre,cur)=>{
+    	return Array.isArray(cur)? pre.concat(flatten(cur)): pre.concat(cur)
+    },[])
+}
+var res = flatten(arr);
+
+(2)
+function shallowFlatten(arr){
+    return [].concat.apply([],arr)
+}
+function flatten(arr,n=1){
+    let result = arr
+    while(n--){
+        result = shallowFlatten(result)
+    }
+    return result 
+}
