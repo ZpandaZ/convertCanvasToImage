@@ -144,3 +144,58 @@ function flatten(arr,n=1){
 [...Array(10000).keys()].map((x)=>x+1).filter((x) => { 
   return x.toString().length > 1 && x === Number(x.toString().split('').reverse().join('')) 
 })
+
+14.链式调用和流程控制
+
+new Test("test").firstSleep(3).sleep(5).eat("dinner")
+//等待3秒
+//test
+//等待5秒
+//dinner
+
+function Test(name){
+  this.tasks = [];
+  let fn = ()=>{
+    console.log(name);
+    this.next();
+  } 
+  this.tasks.push(fn);
+  setTimeout(() => {
+    this.next();
+  }, 0)
+  return this;
+}
+Test.prototype.firstSleep = function(time){
+  var that = this;
+  let fn = ()=>{
+    setTimeout(()=>{
+      console.log('等待'+time+'秒');
+      that.next();
+    },time*1000);
+  }
+  this.tasks.unshift(fn);
+  return this;
+}
+Test.prototype.sleep = function(time){
+  var that = this;
+  let fn = ()=>{
+    setTimeout(()=>{
+      console.log('等待'+time+'秒');
+      that.next();
+    },time*1000);
+  }
+  this.tasks.push(fn);
+  return this;
+}
+Test.prototype.eat  = function(name){
+  let fn = ()=>{
+    console.log(name);
+    this.next();
+  };
+  this.tasks.push(fn);
+  return this;
+}
+Test.prototype.next = function(){
+  let fn = this.tasks.shift();
+  fn && fn();
+}
