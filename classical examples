@@ -168,8 +168,8 @@ function Test(name){
 Test.prototype.firstSleep = function(time){
   var that = this;
   let fn = ()=>{
+    console.log('等待'+time+'秒');
     setTimeout(()=>{
-      console.log('等待'+time+'秒');
       that.next();
     },time*1000);
   }
@@ -179,8 +179,8 @@ Test.prototype.firstSleep = function(time){
 Test.prototype.sleep = function(time){
   var that = this;
   let fn = ()=>{
+    console.log('等待'+time+'秒');
     setTimeout(()=>{
-      console.log('等待'+time+'秒');
       that.next();
     },time*1000);
   }
