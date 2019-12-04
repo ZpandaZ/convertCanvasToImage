@@ -6,3 +6,6 @@
   
 （3）classical examples：
   JavaScript 经典例子
+  
+（4）htmlEncode 
+HTML 字符转移 
