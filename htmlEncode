@@ -1,0 +1,51 @@
+HTML字符转义
+1.正则
+编码：
+function encodeHTML(s) {
+    if (typeof(s) !== "string") return '';
+
+    s = s.replace(/&/g, "&amp;");
+    s = s.replace(/</g, "&lt;");
+    s = s.replace(/>/g, "&gt;");
+    s = s.replace(/\"/g, "&quot;");
+    s = s.replace(/ /g, "&nbsp;");
+    s = s.replace(/\'/g, "&#39;");
+    return s;
+}
+
+转码：
+function htmlDecode(url) {
+    if (typeof url != "string")
+        return "";
+    var map = html_decodes = {
+        '&amp;': '&',
+        '&quot;': '"',
+        '&lt;': '<',
+        '&gt;': '>',
+        "&nbsp;": " ",
+        "&#39;": "'"
+    };
+    return url.replace(/(&quot;|&lt;|&gt;|&amp;|&nbsp;|&#39;)/g, function(str, item) {
+        return map[item];
+    })
+}
+
+2.浏览器标签
+编码：
+function htmlDecode(text){
+    var temp = document.createElement("div");
+    temp.innerHTML = text;
+    var output = temp.innerText || temp.textContent;
+    temp = null;
+    return output;
+}
+  
+解码：
+function htmlEncode(html){
+    var temp = document.createElement ("div");
+    (temp.textContent != undefined ) ? (temp.textContent = html) : (temp.innerText = html);
+    var output = temp.innerHTML;
+    temp = null;
+    return output;
+},
+  
